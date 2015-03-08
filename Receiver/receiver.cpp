@@ -20,7 +20,8 @@ typedef struct {
 } timePairType;
 
 const uint8_t pipes[][6] = {"1Node","2Node"};	// radio send/receive pipes
-const uint16_t id_immortality_time = 4000;		// time threshold for the next event with same id  to be allowed to register again 
+const uint16_t id_immortality_time = 4000;		// time threshold for the next event with same id  to be allowed to register again  (ms)
+const uint16_t sleep_time = 700;                          // main loop usleep time for less cpu usage (us). Low values = high cpu utilisation
 timePairType timePair;											// keeps last message id and  receive time 
 map<uint16_t, timePairType> cars;						// maps car number to the last msg/time pair
 
@@ -38,37 +39,42 @@ long long milis() {
  */
 bool register_event (msgType* message, long long mslong) {
 
+    bool validMessage = true;
+
     if(!cars.empty() && cars.count(message->car)) {
 		// car record exists - check if existing car message has same id
 		if (cars[message->car].message_id==message->message_id) {
 				// check id_immortality_time to decide if the old message is valid or the new one
 				if (mslong-cars[message->car].receive_timestamp<id_immortality_time) {
 					// old message still valid - reject current message as a duplicate
-					return false;
-				}  else {
-                    // same id but the new message counts as a new lap
-       				cout << "Lap time: " << milis()-cars[message->car].receive_timestamp;
-                    printf("\n");
-                }
+					validMessage = false;
+				}  
 			} else {
-				cout << "Lap time: " << milis()-cars[message->car].receive_timestamp;
-				printf("\n");
 				if(message->message_id-cars[message->car].message_id>1) {
-						// Package loss possible (missing id)
+						// Missing id
 						printf("Package loss possible.  ID - current :  %u last:  %u \n", message->message_id,  cars[message->car].message_id);
 				}
 			}
+            // Time from the last message - for testing purposes
+            printf("Lap time: %llu \n", mslong-cars[message->car].receive_timestamp-message->send_delay);
 	}
 	
-	// just add current id/time pair to the map and consider message as registered event 
-	timePair.message_id=message->message_id;
-	timePair.receive_timestamp=mslong;
-	cars[message->car]=timePair;
-	return true;
+    if (validMessage) {
+        // just add current id/time pair to the map and consider message as registered event 
+        timePair.message_id=message->message_id;
+        timePair.receive_timestamp=mslong;
+        cars[message->car]=timePair;
+    }
+    
+	return validMessage;
 }
 
+/**
+ * POST the event to the Web application 
+ */
 void post_event() {
 	
+    // TODO - implement :)
 }
 
 /**
@@ -118,10 +124,9 @@ int main(int argc, char **argv) {
 			}
 		} else {
 			// no data available, put the cpu to sleep for some us
-			usleep(1000);
+			usleep(sleep_time);
 		}
 		
 	}
 	return 0;
 }
-	
