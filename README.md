@@ -1,12 +1,13 @@
 # LapTimer
 Lap timer scoring system for RC cars.
-Using NRF24l01 radios (RF24 lib),  Arduino car modules and Raspberry Pi based main host.
+Using NRF24l01 radios (RF24 lib),  Arduino car modules 
+and Raspberry Pi based main host.
 The idea is quite simple:
 - car with arduino module crosses finish line
 - hall or IR sensor in the car triggers message
-- message with car id and timestamp is sent to the Raspberry
-- Raspberry receives the message and saves it into a database
-- Web application shows score table with lap times
+- message with car id and time is sent to the Raspberry
+- Raspberry receives the message stores it
+- Web application shows table with lap times
 
 
 1. CarModule 
