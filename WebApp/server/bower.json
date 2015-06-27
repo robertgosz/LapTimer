@@ -1,0 +1,30 @@
+{
+  "name": "LapTimerWeb",
+  "main": "server.js",
+  "version": "0.0.0",
+  "description": "Lap Timer Web module",
+  "license": "GPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.3.0",
+    "bootstrap": "^3.2.0",
+    "angular-animate": "^1.3.0",
+    "angular-cookies": "^1.3.0",
+    "angular-resource": "^1.3.0",
+    "angular-route": "^1.3.0",
+    "angular-sanitize": "^1.3.0",
+    "angular-touch": "^1.3.0",
+    "angular-bootstrap": "~0.13.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.3.0"
+  },
+  "appPath": "public",
+  "moduleName": "LapTimerWeb"
+}
