@@ -19,14 +19,14 @@ typedef struct {
     long long receive_timestamp;
 } timePairType;
 
-const uint8_t pipes[][6] = {"1Node","2Node"};       // radio send/receive pipes
+const uint8_t pipes[][6] = {"1Node","2Node"};        // radio send/receive pipes
 const uint16_t id_immortality_time = 4000;          // time threshold for the next event with same id  to be allowed to register again  (ms)
-const uint16_t sleep_time = 700;                            // main loop usleep time for less cpu usage (us). Low values = high cpu utilisation
+const uint16_t sleep_time = 500;                            // main loop usleep time for less cpu usage (us). Low values = high cpu utilisation and higher resolution. 500 => 2000 loops/s
 timePairType timePair;                                              // keeps last message id and  receive time 
-map<uint16_t, timePairType> cars;                       // maps car number to the last msg/time pair
+map<uint16_t, timePairType> cars;                         // maps car number to the last msg/time pair
 
 /**
- * Gets current time (ms)
+ * Gets current time (ms UTC)
  */
 long long milis() {
     struct timeval tp;
@@ -45,7 +45,7 @@ bool register_event (msgType* message, long long mslong) {
         // car record exists - check if existing car message has same id
         if (cars[message->car].message_id==message->message_id) {
                 // check id_immortality_time to decide if the old message is valid or the new one
-                if (mslong-cars[message->car].receive_timestamp<id_immortality_time) {
+                if (mslong-cars[message->car].receive_timestamp<id_immortality_time) {        // subtract send delay!!
                     // old message still valid - reject current message as a duplicate
                     validMessage = false;
                 }  
@@ -56,7 +56,7 @@ bool register_event (msgType* message, long long mslong) {
                 }
             }
             // Time from the last message - for testing purposes
-            printf("Lap time: %llu \n", mslong-cars[message->car].receive_timestamp-message->send_delay);
+            //printf("Lap time: %llu \n", mslong-cars[message->car].receive_timestamp-message->send_delay);
     }
     
     if (validMessage) {
@@ -72,9 +72,23 @@ bool register_event (msgType* message, long long mslong) {
 /**
  * POST the event to the Web application 
  */
-void post_event() {
+void post_event(msgType* message, long long mslong) {
     
-    // TODO - implement :)
+    std::stringstream out;
+    std::stringstream call_line;  
+        
+    //CURL JSON POST EXAMPLE
+    //curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/api/login
+
+    out << "{\"car\":\"" << message->car << "\",\"time\":\"" << mslong-message->send_delay << "\"}";
+    call_line << "curl -H \"Content-Type: application/json\" -X POST -d '" << out.str() << "' http://127.0.0.1:7020/api/events";
+ 
+    std::cout << "\n------------------------------------------------------------\n";
+    std::cout << call_line.str();
+    std::cout << "\n------------------------------------------------------------\n";
+    
+    system(call_line.str().c_str());
+    std::cout << "\n\n";
 }
 
 /**
@@ -118,7 +132,7 @@ int main(int argc, char **argv) {
                     message.send_delay, 
                     message.message_id
                 );
-                post_event();
+                post_event(&message, message_time);
             } else {
                 printf ("Message rejected  \n"); 
             }
