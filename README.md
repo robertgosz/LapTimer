@@ -1,7 +1,8 @@
 # LapTimer
 Lap timer scoring system for RC cars.
 Using NRF24l01 radios (RF24 lib),  Arduino car modules 
-and Raspberry Pi based main host.
+and Raspberry Pi based main host. Web technology stack: 
+Node.js, Bower, Express, Sqlite3, Angular.js, UIBootstrap
 
 The idea is quite simple:
 - car with arduino module crosses finish line
@@ -36,5 +37,3 @@ also to be implemmented.
 Transmitter not implemmented. Planned use of Arduino mini with 38kHz PWM signal and IR diode.
 Currently a TV/AV equipment remote controller is used for test purposes and works good. 
 
-5. Web technology stack: 
-Node.js, Bower, Express, Sqlite3, Angular.js, UIBootstrap
