@@ -10,26 +10,31 @@ The idea is quite simple:
 - Raspberry receives the message stores it
 - Web application shows table with lap times
 
-1. CarModule 
-Sends messages when finish line crossing is triggered by a sensor.
-Radio communication is working.
-Triggering sensors are not implemented yet. 
+1. CarModule - status:implemented
+Arduino mini pro hardware, powered from BEC or lipo.
+Module messages when finish line crossing is triggered by a sensor. 
+Radio communication working. Triggering sensors work great (Vishay 38kHz IR sensor). 
 
-2. Receiver
+2. Receiver - status:implemented
 Simple C++ code to take care of the radio messages transmission and validation.
 When a valid message is received then an event is created and car and time info
-should be posted to the RESTful Web API to collect line crossings and times.
-Message validation is implemented. HTTP POST to be done.
+is posted to the REST service to collect line crossings and times.
+Message validation is implemented. POST works reliably using cUrl.
 
-3. WebApp
+3. WebApp - partially:implemented
 
 a) server - REST API for receiver and Web interface client. 
-Should listen for events posted by receiver, store them in database 
-and offer a nice API for the GUI application.
-NOT IMPLEMENTED 
-Planned technology stack: Node.js, Express, Sqlite
+Listens for events posted by receiver and stores them in the database.
+Get request at "/" returns index.html with an Angular app. 
+Results and administration API to be done.
 
-b) gui - Web application to be a nice simple interface showing cars and 
-their lap times and allowing configured race timing (race duration, driver names...)
-NOT IMPLEMMENTED
-Planned solution: Angular.js app using REST service as data source.
+b) gui - Web application to be a nice simple interface showing lap times.
+Race and simple mode planned. Car names and race parameters configuration 
+also to be implemmented.
+
+4. Finish line transmitter
+Transmitter not implemmented. Planned use of Arduino mini with 38kHz PWM signal and IR diode.
+Currently a TV/AV equipment remote controller is used for test purposes and works good. 
+
+5. Web technology stack: 
+Node.js, Bower, Express, Sqlite3, Angular.js, UIBootstrap
