@@ -8,7 +8,9 @@ The idea is quite simple:
 - car with arduino module crosses finish line
 - hall or IR sensor in the car triggers message
 - message with car id and time is sent to the Raspberry
-- Raspberry receives the message stores it - Web application shows table with lap times
+- Raspberry receives the message stores it 
+- Web application shows table with lap times
+- 
 
 1. CarModule - status:implemented
 Arduino mini pro hardware, powered from BEC or lipo.
