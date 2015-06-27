@@ -23,12 +23,12 @@ Message validation is implemented. POST works reliably using cUrl.
 
 3. WebApp - partially:implemented
 
-a) server - REST API for receiver and Web interface client. 
+    a) server - REST API for receiver and Web interface client. 
 Listens for events posted by receiver and stores them in the database.
 Get request at "/" returns index.html with an Angular app. 
 Results and administration API to be done.
 
-b) gui - Web application to be a nice simple interface showing lap times.
+    b) gui - Web application to be a nice simple interface showing lap times.
 Race and simple mode planned. Car names and race parameters configuration 
 also to be implemmented.
 
