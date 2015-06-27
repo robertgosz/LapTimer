@@ -10,7 +10,8 @@ The idea is quite simple:
 - message with car id and time is sent to the Raspberry
 - Raspberry receives the message stores it 
 - Web application shows table with lap times
-- 
+
+
 
 1. CarModule - status:implemented
 Arduino mini pro hardware, powered from BEC or lipo.
