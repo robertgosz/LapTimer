@@ -19,11 +19,11 @@ typedef struct {
     long long receive_timestamp;
 } timePairType;
 
-const uint8_t pipes[][6] = {"1Node","2Node"};        // radio send/receive pipes
-const uint16_t id_immortality_time = 4000;          // time threshold for the next event with same id  to be allowed to register again  (ms)
-const uint16_t sleep_time = 500;                            // main loop usleep time for less cpu usage (us). Low values = high cpu utilisation and higher resolution. 500 => 2000 loops/s
-timePairType timePair;                                              // keeps last message id and  receive time 
-map<uint16_t, timePairType> cars;                         // maps car number to the last msg/time pair
+const uint8_t pipes[][6] = {"1Node","2Node"};   // radio send/receive pipes
+const uint16_t id_immortality_time = 4000;      // time threshold for the next event with same id  to be allowed to register again  (ms)
+const uint16_t sleep_time = 500;                        // main loop usleep time for less cpu usage (us). Low values = high cpu utilisation and higher resolution. 500 => 2000 loops/s
+timePairType timePair;                                          // keeps last message id and  receive time 
+map<uint16_t, timePairType> cars;                   // maps car number to the last msg/time pair
 
 /**
  * Gets current time (ms UTC)
@@ -76,9 +76,6 @@ void post_event(msgType* message, long long mslong) {
     
     std::stringstream out;
     std::stringstream call_line;  
-        
-    //CURL JSON POST EXAMPLE
-    //curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/api/login
 
     out << "{\"car\":\"" << message->car << "\",\"time\":\"" << mslong-message->send_delay << "\"}";
     call_line << "curl -H \"Content-Type: application/json\" -X POST -d '" << out.str() << "' http://127.0.0.1:7020/api/events";
@@ -137,7 +134,7 @@ int main(int argc, char **argv) {
                 printf ("Message rejected  \n"); 
             }
         } else {
-            // no data available, put the cpu to sleep for some us
+            // no data available, put cpu to sleep for some us
             usleep(sleep_time);
         }
         
