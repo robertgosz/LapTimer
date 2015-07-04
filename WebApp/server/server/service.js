@@ -1,7 +1,7 @@
 
-    var startTime = new Date().getTime(),
-          dao = require('./dao'),
-          queue = require('./queue').getQueue();
+    var startTime;
+    var dao = require('./dao');
+    var queue = require('./queue').getQueue();
 
     // Function called from timer to persist incoming events
     var backgroundService = function () {
@@ -26,6 +26,7 @@
     module.exports = {
         
             start:  function (job_delay) {
+                    startTime = new Date().getTime();
                     dao.createDb();
                     //dao.createConfig();
                     setInterval(backgroundService, job_delay);
@@ -41,6 +42,10 @@
             
             getResults: function (res) {
                     dao.getResults(res, startTime);
+            },
+            
+            reset: function () {
+                    startTime = new Date().getTime();
             },
             
             formatTime: getTime

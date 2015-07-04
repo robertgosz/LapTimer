@@ -40,12 +40,13 @@
     
     // Buid results / statistics  query
     var buildResultsQuery = function (startTime)  {
-            var query   = "SELECT cars.id, cars.name, fastlap.fastest, avglap.avg, lastlap.last, count(laps.lap_id) as lapcount FROM laps LEFT JOIN cars ON laps.car_id = cars.id ";
-                  query += "LEFT JOIN (SELECT laps.car_id, min(laps.laptime) as fastest FROM laps WHERE laps.time > "+startTime+" AND laps.laptime>0 GROUP BY laps.car_id) fastlap ON laps.car_id= fastlap.car_id ";
-                  query += "LEFT JOIN (SELECT laps.car_id, cast(avg(laps.laptime) as INTEGER) as avg FROM laps WHERE laps.time > "+startTime+" AND laps.laptime>0 GROUP BY laps.car_id) avglap ON laps.car_id = avglap.car_id ";
-                  query += "LEFT JOIN (SELECT car_id, laptime as last, lap_id  FROM laps WHERE time > "+startTime+" AND laptime > 0 ORDER BY lap_id desc LIMIT 1) lastlap ON laps.car_id = lastlap.car_id ";
-                  query += "WHERE laps.time > "+startTime+" ";
-                  query += "GROUP BY cars.id, cars.name ";
+            var query;
+            query  =  "SELECT cars.id, cars.name, fastlap.fastest, avglap.avg, lastlap.last, count(laps.lap_id) as lapcount FROM laps LEFT JOIN cars ON laps.car_id = cars.id ";
+            query += "LEFT JOIN (SELECT laps.car_id, min(laps.laptime) as fastest FROM laps WHERE laps.time > "+startTime+" AND laps.laptime>0 GROUP BY laps.car_id) fastlap ON laps.car_id= fastlap.car_id ";
+            query += "LEFT JOIN (SELECT laps.car_id, cast(avg(laps.laptime) as INTEGER) as avg FROM laps WHERE laps.time > "+startTime+" AND laps.laptime>0 GROUP BY laps.car_id) avglap ON laps.car_id = avglap.car_id ";
+            query += "LEFT JOIN (SELECT car_id, laptime as last, max(lap_id)  FROM laps WHERE laps.time > "+startTime+" AND laps.laptime>0 GROUP BY car_id) lastlap ON laps.car_id = lastlap.car_id ";
+            query += "WHERE laps.time > "+startTime+" ";
+            query += "GROUP BY cars.id, cars.name ";
             return query;
     }
     
