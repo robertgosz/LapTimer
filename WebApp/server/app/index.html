@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html ng-app="timerApp">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+    <title>Timer App</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script><!-- load angular -->
+    <script src="app.js"></script>
+
+</head>
+
+<body ng-controller="mainController">
+    
+    <div class="container-fluid">
+
+        <div class="row">
+            <P>Click start to begin a new race </P>
+        </div>
+
+        <!-- RESULTS LIST -->
+        <div id="result-list" class="row">
+            <div class="col-sm-8 col-sm-offset-4">
+
+                <!-- LOOP OVER THE TODOS IN $scope.todos -->
+                <div class="result" ng-repeat="car in cars">
+                    {{ car.number }} {{ car.name }} {{ car.laps }} {{ car.lastTime }} {{ car.avgTime }} 
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
