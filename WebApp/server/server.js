@@ -15,6 +15,7 @@
     var eventCounter = 1;
     var app = express().use(bodyParser.json());  
     var server = http.createServer(app);
+    var ip = service.getIPAddress();
     
      // Init
     service.start(jobDelay);
@@ -27,21 +28,26 @@
     // Listening for incoming events
     app.post('/api/events', function(req, res, next) {
             // Avoid posting from external world
-            //if (req.connection.remoteAddress=='127.0.0.1' && req.ip=='127.0.0.1' ) {
+            if (req.connection.remoteAddress==ip && req.ip==ip) {
                 var event = JSON.parse(JSON.stringify(req.body, null, 2));
+                res.send("");
                 service.processEvent(event); 
-                res.send(service.formatTime(event.time));
                 eventCounter++;
-            //}
+            }
+    })
+    
+    // Listening for GUI commands
+    app.post('/api/commands', function(req, res, next) {
+            res.send("");
+            console.log('got command');
+            var data = JSON.parse(JSON.stringify(req.body, null, 2));
+            if (data.command == "reset") service.reset();
     })
 
     // Get the results
     app.get('/api/cars', function(req, res, next) {
-            // Avoid get from external world
-            //if (req.connection.remoteAddress=='127.0.0.1' && req.ip=='127.0.0.1' ) {
-                console.log('got request');
-                service.getResults(res, service.getStartTime());
-            //}
+            //console.log('got request');
+            service.getResults(res, service.getStartTime());
     })
 
     // Serve the GUI

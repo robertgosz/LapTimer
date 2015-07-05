@@ -1,3 +1,2 @@
-'use strict';
-
-angular.module('lapTimerWeb', [ 'ui.bootstrap' ]);
+    'use strict';
+    angular.module('lapTimerWeb', [ 'ui.bootstrap' ]);

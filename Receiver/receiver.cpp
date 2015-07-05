@@ -19,11 +19,11 @@ typedef struct {
     long long receive_timestamp;
 } timePairType;
 
-const uint8_t pipes[][6] = {"1Node","2Node"};   // radio send/receive pipes
+const uint8_t pipes[][6] = {"1Node","2Node"};    // radio send/receive pipes
 const uint16_t id_immortality_time = 4000;      // time threshold for the next event with same id  to be allowed to register again  (ms)
 const uint16_t sleep_time = 500;                        // main loop usleep time for less cpu usage (us). Low values = high cpu utilisation and higher resolution. 500 => 2000 loops/s
 timePairType timePair;                                          // keeps last message id and  receive time 
-map<uint16_t, timePairType> cars;                   // maps car number to the last msg/time pair
+map<uint16_t, timePairType> cars;                    // maps car number to the last msg/time pair
 
 /**
  * Gets current time (ms UTC)
@@ -80,9 +80,9 @@ void post_event(msgType* message, long long mslong) {
     out << "{\"car\":\"" << message->car << "\",\"time\":\"" << mslong-message->send_delay << "\"}";
     call_line << "curl -H \"Content-Type: application/json\" -X POST -d '" << out.str() << "' http://192.168.1.14:7020/api/events";
  
-    std::cout << "\n------------------------------------------------------------\n";
-    std::cout << call_line.str();
-    std::cout << "\n------------------------------------------------------------\n";
+    //std::cout << "\n------------------------------------------------------------\n";
+    //std::cout << call_line.str();
+    //std::cout << "\n------------------------------------------------------------\n";
     
     system(call_line.str().c_str());
     std::cout << "\n\n";
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
     message.send_delay = 0;
     
     printf("Initializing radio \n");
-    RF24 radio( 
+    RF24 radio(
                             RPI_V2_GPIO_P1_22, 
                             RPI_V2_GPIO_P1_24, 
                             BCM2835_SPI_SPEED_4MHZ

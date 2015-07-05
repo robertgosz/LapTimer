@@ -7,42 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Timer App</title>
     <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/app.css">
 
 </head>
 
 <body ng-controller="MainController">
-        
-    <div class="container-fluid" ng-view>
-                <br>
-                <table  border=1 width=100%>
-                    
-                    <thead>
+    
+    <div class="container-fluid resultTable" ng-view>
+
+                <table  width=100%>
+
                     <tr>
-                        <th>Car </th>
-                        <th>Driver </th>
-                        <th>Laps </th>
-                        <th>Fastest </th>
-                        <th>Average </th>
-                        <th>Last </th>
+                        <td>Id</td>
+                        <td>Driver </td>
+                        <td>Laps </td>
+                         <td>Last </td>
+                        <td>Best</td>
+                        <td>Average </td>
                     </tr>
-                    </thead>
                     
-                <tr ng-repeat="car in cars">
+                    <tr ng-repeat="car in cars">
                         <td> {{ car.id }} </td>
-                        <td> {{ car.name }} </td>
-                        <td> {{ car.lapcount }} </td>
+                        <td><b> {{ car.name }} </b></td>
+                        <td><b> {{ car.lapcount }} </b></td>
+                        <td> {{ car.last }} </td>
                         <td> {{ car.fastest }} </td>
                         <td> {{ car.avg }} </td>
-                        <td> {{ car.last }} </td>
-                </tr>
+                    </tr>
                 
                 </table>
-               
-
-            </div>
-        </div>
 
     </div>
+    
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+            <div class="container" ng-if="admin">
+                <button type="button" class="btn btn-default navbar-btn btn-success">Race</button>
+                <button type="button" class="btn btn-default navbar-btn btn-danger" ng-click="resetApp()">Reset</button>
+                <button type="button" class="btn btn-default navbar-btn btn-warning">Cars</button>
+                <button type="button" class="btn btn-default navbar-btn btn-warning">Config</button>
+                <button type="button" class="btn btn-default navbar-btn btn-warning">About</button>
+            </div>
+            <div class="container" ng-if="!admin">
+                <button type="button" class="btn btn-default navbar-btn">About</button>
+            </div>
+    </nav>
 
     <script src="components/angular/angular.js"></script>
     <script src="components/angular-bootstrap/ui-bootstrap.js"></script>
