@@ -1,0 +1,63 @@
+body {
+        padding-top: 0px; 
+        margin-top: 0px;
+}
+
+html,body{
+    height: 100%
+}
+
+.resultTable {
+	margin:0px;padding:0px;
+	width:100%;
+	border:1px solid #000000;
+}.resultTable table{
+    border-collapse: collapse;
+    border-spacing: 0;
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}
+.resultTable tr:nth-child(odd){ background-color:#ffe4cc; }
+.resultTable tr:nth-child(even)    { background-color:#ffffff; }.resultTable td{
+	vertical-align:middle;
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align:center;
+	padding:4px;
+	font-size:14px;
+	font-family:Verdana;
+	font-weight:normal;
+	color:#000000;
+}.resultTable tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.resultTable tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.resultTable tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+.resultTable tr:first-child td{
+    background:-o-linear-gradient(bottom, #ff7f00 5%, #bf5f00 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff7f00), color-stop(1, #bf5f00) );
+	background:-moz-linear-gradient( center top, #ff7f00 5%, #bf5f00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff7f00", endColorstr="#bf5f00");	background: -o-linear-gradient(top,#ff7f00,bf5f00);
+	background-color:#ff7f00;
+	border:0px solid #000000;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:14px;
+	font-family:Verdana;
+	font-weight:bold;
+	color:#ffffff;
+}
+.resultTable tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #ff7f00 5%, #bf5f00 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff7f00), color-stop(1, #bf5f00) );
+	background:-moz-linear-gradient( center top, #ff7f00 5%, #bf5f00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff7f00", endColorstr="#bf5f00");	background: -o-linear-gradient(top,#ff7f00,bf5f00);
+	background-color:#ff7f00;
+}
+.resultTable tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.resultTable tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
